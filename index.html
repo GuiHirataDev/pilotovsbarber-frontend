@@ -2,57 +2,38 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PilotoVS Barber - Agendamento</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 600px;
-      margin: auto;
-      padding: 20px;
-    }
-    select, input {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-    }
-    button {
-      padding: 12px;
-      width: 100%;
-      cursor: pointer;
-      background: black;
-      color: white;
-      font-size: 16px;
-      border: none;
-      margin-top: 10px;
-    }
-    #saida {
-      background: #f3f3f3;
-      padding: 12px;
-      margin-top: 20px;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <h1>Agendamento - PilotovsBarber</h1>
+  <div class="container">
+    <h1>PilotoVS Barber</h1>
+    <p class="subtitle">Agende seu horário rapidamente</p>
 
-  <label>Data:</label>
-  <input type="date" id="data" />
+    <div class="card">
 
-  <label>Horários disponíveis:</label>
-  <select id="horarios">
-    <option value="">Selecione uma data</option>
-  </select>
+      <label>Data:</label>
+      <input type="date" id="data" class="input" />
 
-  <label>Nome:</label>
-  <input type="text" id="nome" />
+      <label>Horários disponíveis:</label>
+      <select id="horarios" class="input">
+        <option value="">Selecione uma data</option>
+      </select>
 
-  <label>Telefone:</label>
-  <input type="text" id="telefone" />
+      <label>Nome:</label>
+      <input type="text" id="nome" class="input" placeholder="Seu nome" />
 
-  <button id="btnAgendar">Confirmar Agendamento</button>
+      <label>Telefone:</label>
+      <input type="text" id="telefone" class="input" placeholder="(XX) XXXXX-XXXX" />
 
-  <pre id="saida">Selecione uma data para carregar horários.</pre>
+      <button id="btnAgendar">Confirmar Agendamento</button>
+    </div>
+
+    <div id="toast"></div>
+
+  </div>
 
   <script src="script.js"></script>
 

@@ -3,6 +3,17 @@ const API_URL = "https://pilotovsbarber-backend.vercel.app";
 document.getElementById("data").addEventListener("change", carregarHorarios);
 document.getElementById("btnAgendar").addEventListener("click", agendar);
 
+function toast(msg, cor = "#00d26a") {
+  const box = document.getElementById("toast");
+  box.innerText = msg;
+  box.style.background = cor;
+  box.style.display = "block";
+
+  setTimeout(() => {
+    box.style.display = "none";
+  }, 3000);
+}
+
 async function carregarHorarios() {
   const data = document.getElementById("data").value;
   const select = document.getElementById("horarios");
@@ -27,8 +38,9 @@ async function carregarHorarios() {
     if (horarios.length === 0) {
       select.innerHTML = "<option>Nenhum horário disponível</option>";
     }
+
   } catch (err) {
-    document.getElementById("saida").innerText = "Erro ao carregar horários";
+    toast("Erro ao carregar horário", "red");
   }
 }
 
@@ -39,31 +51,34 @@ async function agendar() {
   const horario = document.getElementById("horarios").value;
 
   if (!nome || !date || !horario) {
-    return alert("Preencha nome, data e horário.");
+    toast("Preencha nome, data e horário", "red");
+    return;
   }
 
   try {
     const res = await fetch(`${API_URL}/agendar`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nome, telefone, date, horario })
+      body: JSON.stringify({ nome, telefone, date, horario }),
     });
 
     const dataRes = await res.json();
 
     if (res.status === 409) {
-      alert("Horário já reservado.");
-      return carregarHorarios();
-    }
-
-    if (dataRes.success) {
-      alert("Agendamento realizado com sucesso!");
+      toast("Horário já reservado", "red");
       carregarHorarios();
       return;
     }
 
-    alert("Erro: " + JSON.stringify(dataRes));
+    if (dataRes.success) {
+      toast("Agendado com sucesso!");
+      carregarHorarios();
+      return;
+    }
+
+    toast("Erro inesperado", "red");
+
   } catch (err) {
-    alert("Erro ao agendar.");
+    toast("Erro ao conectar", "red");
   }
 }
